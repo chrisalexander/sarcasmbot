@@ -4,6 +4,8 @@
     {
         static void Main(string[] args)
         {
+            var manager = new BotManager();
+            manager.Execute().Wait();
         }
     }
 }
