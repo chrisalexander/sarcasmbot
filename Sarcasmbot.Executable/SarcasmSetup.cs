@@ -27,7 +27,7 @@ namespace Sarcasmbot.Executable
 
         public BotMessage GetResponse(ResponseContext context)
         {
-            Console.WriteLine($"Received DM from {context.Message.User.FormattedUserID}: {context.Message.Text}");
+            Console.WriteLine($"Received DM from {context.UserNameCache[context.Message.User.ID]}: {context.Message.Text}");
 
             if (context.Message.Text.StartsWith("add"))
             {
