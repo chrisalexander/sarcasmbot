@@ -76,6 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SarcasmResponder.cs" />
     <Compile Include="SarcasmService.cs" />
+    <Compile Include="SarcasmSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

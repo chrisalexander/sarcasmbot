@@ -8,7 +8,7 @@ namespace Sarcasmbot.Executable
 {
     class BotManager
     {
-        public async void Execute(CancellationToken token)
+        public async Task Execute(CancellationToken token)
         {
             var bot = new Bot();
 
@@ -19,6 +19,7 @@ namespace Sarcasmbot.Executable
             var service = new SarcasmService();
             
             bot.Responders.Add(new SarcasmResponder(service));
+            bot.Responders.Add(new SarcasmSetup(service));
 
             while (true)
             {
@@ -26,6 +27,8 @@ namespace Sarcasmbot.Executable
 
                 if (token.IsCancellationRequested)
                 {
+                    service.Exit();
+
                     return;
                 }
             }

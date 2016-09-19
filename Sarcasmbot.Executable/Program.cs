@@ -11,11 +11,13 @@ namespace Sarcasmbot.Executable
 
             var cts = new CancellationTokenSource();
 
-            manager.Execute(cts.Token);
+            var task = manager.Execute(cts.Token);
 
             Console.WriteLine("Enter to exit");
             Console.ReadLine();
             cts.Cancel();
+
+            task.Wait();
         }
     }
 }
