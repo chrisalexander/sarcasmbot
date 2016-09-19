@@ -1,6 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MargieBot;
 
@@ -8,7 +8,7 @@ namespace Sarcasmbot.Executable
 {
     class BotManager
     {
-        public async Task Execute()
+        public async void Execute(CancellationToken token)
         {
             var bot = new Bot();
 
@@ -16,9 +16,19 @@ namespace Sarcasmbot.Executable
 
             await bot.Connect(apiKey);
 
-            bot.MessageReceived += (msg) => Console.WriteLine(msg);
+            var service = new SarcasmService();
+            
+            bot.Responders.Add(new SarcasmResponder(service));
 
-            await Task.Delay(10000000);
+            while (true)
+            {
+                await Task.Delay(1000);
+
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+            }
         }
     }
 }
