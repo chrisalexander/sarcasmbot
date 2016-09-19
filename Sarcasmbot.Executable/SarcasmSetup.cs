@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using MargieBot.Models;
 using MargieBot.Responders;
 
@@ -26,9 +27,18 @@ namespace Sarcasmbot.Executable
 
         public BotMessage GetResponse(ResponseContext context)
         {
+            Console.WriteLine($"Received DM from {context.Message.User.FormattedUserID}: {context.Message.Text}");
+
             if (context.Message.Text.StartsWith("add"))
             {
-                this.sarcasm.Add(this.addRegex.Replace(context.Message.Text, string.Empty));
+                var newSarcasm = this.addRegex.Replace(context.Message.Text, string.Empty);
+
+                if (string.IsNullOrWhiteSpace(newSarcasm))
+                {
+                    return new BotMessage { Text = "Please type some sarcasm." };
+                }
+
+                this.sarcasm.Add(newSarcasm);
 
                 return new BotMessage { Text = "Added - thanks for your sarcasm." };
             }
